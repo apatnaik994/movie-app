@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+<meta name="viewport" 
+  <meta charset="UTF-8">
+ 
+
+
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+
+
+
+
+    <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+
+    <meta name="apple-mobile-web-app-title" content="CodePen">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+
+    <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111" />
+
+
+
+  
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+
+
+  <title>CodePen - Netflix app UI Concept [GSAP &amp; CSS]</title>
+
+    <link rel="canonical" href="https://codepen.io/designfenix/pen/JjrEwjM">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+  
+  
+<style>
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap");
+:root {
+  --light: #f3f3f3;
+  --lightdark: #696b6e;
+  --dark: #17181e;
+  --regularFont: "PT Sans";
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background-image: linear-gradient(to bottom, #121212 0%, #17181e 100%);
+  display: grid;
+  place-items: center;
+  height: 100%;
+}
+
+.viewport {
+  width: 350px;
+  height: 650px;
+  overflow-y: scroll;
+  position: relative;
+  border-radius: 32px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.05);
+  margin: 0 auto;
+  background: var(--dark);
+}
+.viewport::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+}
+.viewport::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
+}
+.viewport::-webkit-scrollbar-thumb {
+  background-color: #000000;
+}
+.viewport:before, .viewport:after {
+  position: absolute;
+  content: "";
+  top: -95px;
+  right: 0px;
+  background: var(--light);
+  width: 160px;
+  height: 160px;
+  border-radius: 100%;
+  filter: blur(80px);
+  opacity: 0.4;
+  z-index: 0;
+}
+.viewport:after {
+  top: 100%;
+  left: -10%;
+}
+@media (max-width: 540px) {
+  .viewport {
+    width: 100%;
+    min-height: 140vh;
+    height: auto;
+    border-radius: 0px;
+    margin: 0;
+    box-shadow: none;
+    overflow: hidden;
+  }
+}
+.viewport #app {
+  height: 100%;
+  position: relative;
+}
+.viewport #app header {
+  display: flex;
+  padding: 20px;
+  padding-top: 40px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+.viewport #app header .logo {
+  display: block;
+  margin-right: auto;
+}
+.viewport #app header a {
+  margin: 0 10px;
+  color: var(--light);
+}
+.viewport #app header a:hover {
+  color: var(--light);
+}
+.viewport #app main {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+}
+.viewport #app main h2 {
+  color: var(--light);
+  width: 100%;
+  align-self: start;
+  padding: 0 30px;
+  font-weight: bold;
+  font-size: 1.5em;
+  line-height: 1.7em;
+  font-family: var(--regularFont);
+  margin-top: 30px;
+}
+.viewport #app main h2 span {
+  font-family: apple color emoji, segoe ui emoji, noto color emoji, android emoji, emojisymbols, emojione mozilla, twemoji mozilla, segoe ui symbol;
+}
+.viewport #app main .trending-carousel {
+  position: relative;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  height: 340px;
+  z-index: 2;
+}
+.viewport #app main .trending-carousel .card {
+  transform-style: preserve-3d;
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 60px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  background-size: cover;
+  background-position: center center;
+  border-radius: 28px;
+  margin-top: 40px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  transform-origin: center bottom;
+  z-index: 1;
+}
+.viewport #app main .trending-carousel .card:after {
+  background: inherit;
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  filter: blur(20px);
+  transform: translateZ(-10px);
+  border-radius: 30px;
+  opacity: 0.6;
+}
+.viewport #app main .category-content {
+  width: 100%;
+  margin-top: 20px;
+}
+.viewport #app main .category-content ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  position: relative;
+  z-index: 2;
+}
+.viewport #app main .category-content ul li {
+  position: relative;
+  padding-bottom: 5px;
+}
+.viewport #app main .category-content ul li:before {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  height: 5px;
+  width: 100%;
+  opacity: 0;
+  transition: ease all 0.3s;
+  background: radial-gradient(50% 50% at 50% 50%, #e50914 0%, rgba(87, 87, 92, 0) 100%);
+}
+.viewport #app main .category-content ul li a {
+  padding: 15px 0;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 1.25em;
+  line-height: 1.5em;
+  font-family: var(--regularFont);
+  color: var(--lightdark);
+}
+.viewport #app main .category-content ul li.active a {
+  color: var(--light);
+}
+.viewport #app main .category-content ul li.active:before {
+  opacity: 1;
+}
+.viewport #app main .slick-container {
+  overflow: hidden;
+  padding: 30px 0;
+  position: relative;
+  width: 100%;
+  z-index: 2;
+}
+.viewport #app main .slick-container .slick {
+  height: 160px;
+  overflow: hidden;
+}
+.viewport #app main .slick-container .slick.slick-initialized {
+  height: auto;
+  overflow: initial;
+}
+.viewport #app main .slick-container .slick-list {
+  padding: 0 30px;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+.viewport #app main .slick-container .movie {
+  background-size: cover;
+  background-repeat: none;
+  background-position: center center;
+  border-radius: 16px;
+  margin: 0 6px;
+  border: none;
+  transition: ease all 0.3s;
+  height: 160px;
+  width: 100px;
+  display: inline-flex;
+}
+.viewport #app main .slick-container .movie:focus {
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+.viewport #app footer {
+  padding-bottom: 30px;
+}
+.viewport #app footer nav ul {
+  padding: 0 60px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  align-content: center;
+}
+.viewport #app footer nav ul li {
+  display: block;
+}
+.viewport #app footer nav ul li a {
+  color: var(--light);
+  text-decoration: none;
+}
+.viewport #app footer nav ul li a span {
+  font-size: 0.75em;
+  font-family: var(--regularFont);
+  background: transparent;
+  position: relative;
+}
+.viewport #app footer nav ul li a span:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--light);
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  filter: blur(15px);
+  opacity: 0.3;
+}
+.viewport #app footer nav ul li a span:after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  display: block;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-top: 5px;
+  background-color: var(--light);
+}
+
+
+
+body {
+  font-family: "Lato", sans-serif;
+  transition: background-color .5s;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+</style>
+
+
+<style>
+            #popupDialog {
+                display: none;
+                position: fixed;
+                top: 30%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 20px;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                box-shadow: 0 4px 8px
+                    rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            #overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+			
+			 #popupDialog1 {
+                display: none;
+                position: fixed;
+                top: 30%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 20px;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                box-shadow: 0 4px 8px
+                    rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            #overlay1 {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+
+ #popupDialog2 {
+                display: none;
+                position: fixed;
+                top: 30%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 20px;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                box-shadow: 0 4px 8px
+                    rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            #overlay2 {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+
+            h1 {
+                color: green;
+            }
+        </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+</head>
+
+<body translate="no">
+
+
+
+
+
+
+
+
+<div class="viewport">
+	<div id="app">
+		<header>
+			<a href="#" class="logo">
+			  <br>
+                <br>
+<h5>Akhil</h5>
+				<svg width="17" height="31" viewBox="0 0 17 31" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+					<rect width="17" height="31" fill="url(#pattern0)" />
+					<defs>
+						<pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+							<use xlink:href="#image0_2_71" transform="translate(-0.0028507) scale(0.000445198 0.000244141)" />
+						</pattern>
+						<image id="image0_2_71" width="2259" height="4096" xlink:href="" />
+					</defs>
+				</svg>
+			</a>
+			<a href="#">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M8.5138 3.21242C8.22014 2.92817 7.74524 2.92935 7.45307 3.21505C7.1609 3.50075 7.16211 3.96278 7.45577 4.24703L9.52322 6.24825C9.23242 6.28633 8.9428 6.3357 8.65504 6.39637L8.21242 6.48969C6.05299 6.94497 4.34427 8.54982 3.80051 10.6334C3.39983 12.1687 3.39983 13.7771 3.80051 15.3125C4.23255 16.968 5.40001 18.3212 6.94466 19.0358L6.37616 19.8654C6.14638 20.2007 6.23952 20.6538 6.58419 20.8774C6.92886 21.1009 7.39454 21.0103 7.62432 20.675L8.4283 19.5017L8.65504 19.5495C10.2004 19.8753 11.7996 19.8753 13.345 19.5495L13.5726 19.5015L14.3767 20.675C14.6065 21.0103 15.0722 21.1009 15.4169 20.8774C15.7615 20.6538 15.8547 20.2007 15.6249 19.8654L15.0561 19.0354C16.6004 18.3207 17.7675 16.9677 18.1995 15.3125C18.6002 13.7771 18.6002 12.1687 18.1995 10.6334C17.6557 8.54982 15.947 6.94497 13.7876 6.48969L13.345 6.39637C13.0574 6.33573 12.7679 6.28638 12.4773 6.24832L14.5448 4.24703C14.8385 3.96278 14.8397 3.50075 14.5475 3.21505C14.2554 2.92935 13.7804 2.92817 13.4868 3.21242L11.0003 5.61926L8.5138 3.21242Z" fill="#B6B9BD" />
+				</svg>
+			</a>
+            
+         
+   
+            
+            
+			<a href="#">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M12 3C9.56586 3 7.59259 4.95716 7.59259 7.37143C7.59259 9.7857 9.56586 11.7429 12 11.7429C14.4341 11.7429 16.4074 9.7857 16.4074 7.37143C16.4074 4.95716 14.4341 3 12 3Z" fill="#B6B9BD" />
+					<path d="M14.601 13.6877C12.8779 13.4149 11.1221 13.4149 9.39904 13.6877L9.21435 13.7169C6.78647 14.1012 5 16.1783 5 18.6168C5 19.933 6.07576 21 7.40278 21H16.5972C17.9242 21 19 19.933 19 18.6168C19 16.1783 17.2135 14.1012 14.7857 13.7169L14.601 13.6877Z" fill="#B6B9BD" />
+				</svg>
+			</a>
+			
+				<div id="main">
+
+					   <div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#" onclick="popupFn()">About</a>
+  
+  <div id="overlay"></div>
+        <div id="popupDialog">
+            <p>This is about</p>
+            <button onclick="closeFn()">
+                Close
+            </button>
+        </div>
+         <script>
+            function popupFn() {
+                document.getElementById(
+                    "overlay"
+                ).style.display = "block";
+                document.getElementById(
+                    "popupDialog"
+                ).style.display = "block";
+            }
+            function closeFn() {
+                document.getElementById(
+                    "overlay"
+                ).style.display = "none";
+                document.getElementById(
+                    "popupDialog"
+                ).style.display = "none";
+            }
+        </script>
+ 
+ 
+ 
+  
+  <a href="#" onclick="popupFn1()">Feedback</a>
+    <div id="overlay1"></div>
+        <div id="popupDialog1">
+            <p>This is services page</p>
+            <button onclick="closeFn1()">
+                Close
+            </button>
+        </div>
+         <script>
+            function popupFn1() {
+                document.getElementById(
+                    "overlay1"
+                ).style.display = "block";
+                document.getElementById(
+                    "popupDialog1"
+                ).style.display = "block";
+            }
+            function closeFn1() {
+                document.getElementById(
+                    "overlay1"
+                ).style.display = "none";
+                document.getElementById(
+                    "popupDialog1"
+                ).style.display = "none";
+            }
+        </script>
+  
+
+  <style>
+
+
+.dropdown1 {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown1-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown1-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown1-content a:hover {background-color: #ddd;}
+
+.dropdown1:hover .dropdown1-content {display: block;}
+
+
+</style>
+  <div class="dropdown1">
+  <a href="#" >Languages</a>
+  <div class="dropdown1-content">
+    <a href="#"><small><p style="color:Black;">Language1</p></small></a>
+    <a href="#"><small><p style="color:Black;">Language 2</p></small></a>
+    <a href="#"><small><p style="color:Black;">Language 3</p></small></a>
+  </div>
+</div>
+  
+  
+ 
+  
+  
+
+
+  
+  
+  
+  <a href="#">Genere</a>
+</div>
+  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
+
+</div>
+
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+  document.body.style.backgroundColor = "white";
+}
+</script>	
+			
+			
+			
+		</header>
+		
+		
+		
+		<main>
+		
+		
+	
+		
+		
+		
+		
+		
+		
+			<h2>POPULAR </h2>
+			
+	
+
+		
+			
+			
+			<div class="trending-carousel">
+			
+			
+		
+			
+			
+			
+			
+			
+			
+			
+				<div class="card" style="background-image:url(https://cdn.europosters.eu/image/750/posters/sherlock-destruction-i34921.jpg)">
+				</div>
+				<div class="card" style="background-image:url(https://i2.wp.com/www.sosyazete.com/wp-content/uploads/2020/05/MV5BZDcxOGI0MDYtNTc5NS00NDUzLWFkOTItNDIxZjI0OTllNTljXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_-scaled.jpg?fit=1728%2C2560&ssl=1)">
+				</div>
+				<div class="card" style="background-image:url(https://pics.filmaffinity.com/Ragnarok_Serie_de_TV-490098517-large.jpg)">
+				</div>
+				<div class="card" style="background-image:url(https://img.wattpad.com/cover/286043978-352-k337636.jpg)">
+				</div>
+			</div>
+			
+			
+			
+			
+		 <style>
+    section {
+      height: 8vh; /* Full height sections */
+      padding: 0px;
+      border: 100px;
+      display: flex;
+      justify-content: ;
+    }
+	
+    .clickable-text {
+	height: 10px;
+      color: blue;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+ section2 {
+      height: 20vh; /* Full height sections */
+      padding: 0px;
+      border: 100px;
+      display: flex;
+      justify-content: ;
+    }
+
+	 section3 {
+      height: 20vh; /* Full height sections */
+      padding: 0px;
+      border: 100px;
+      display: flex;
+      justify-content: ;
+    }
+	
+  </style>	
+			
+			
+			
+			
+			
+			
+			
+			
+			<div class="category-content">
+				<ul><section id="section1">
+					<li class="active">
+		
+  <a href="javascript:void(0)" class="clickable-text" onclick="scrollToSection('section2')">Films</a>
+
+					</li></section>
+					
+				<section id="section1">	<li>
+								
+  <a href="javascript:void(0)" class="clickable-text" onclick="scrollToSection('section3')">Series</a>
+
+					</li></section>
+				<section id="section1">	<li>
+							
+  <a href="javascript:void(0)" class="clickable-text" onclick="scrollToSection('section2')">Shows</a>
+
+					</li></section>
+				</ul>
+			</div>
+			
+
+			<div class="slick-container">
+				<div class="slick">
+					<div class="movie" style="background-image:url(https://www.ecartelera.com/carteles/12800/12865/001_p.jpg)"></div>
+					<div class="movie" style="background-image:url(https://pics.filmaffinity.com/ARQ-692316640-mmed.jpg)"></div>
+					<div class="movie" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp4AHOvAoJND69NmMCQHn4S7QDHjrDB41Eww&usqp=CAU)"></div>
+					<div class="movie" style="background-image:url(https://m.media-amazon.com/images/M/MV5BZTVkMjBlNTEtM2Y0YS00MTEyLWFhNzgtYjU1ZjM3YmY0ODg4XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg)"></div>
+					<div class="movie" style="background-image:url(https://m.media-amazon.com/images/I/61ljrN7zmoL._AC_SY679_.jpg)"></div>
+					<div class="movie" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSskuiX3I6wtUMAFOZ4BTlSUa6-y2-RtAT1Vw&usqp=CAU)"></div>
+
+				
+			
+		
+		<div class="slick-container"><section id="section1">
+					<div class="category-content"><ul>
+					<li class="active">
+		
+  <a href="javascript:void(0)" class="clickable-text" onclick="scrollToSection('section2')"> Telugu </a></ul></div>
+					</li>
+					<div class="slick">
+					<div class="movie" style="background-image:url(https://www.ecartelera.com/carteles/12800/12865/001_p.jpg)"></div>
+					<div class="movie" style="background-image:url(https://pics.filmaffinity.com/ARQ-692316640-mmed.jpg)"></div>
+					<div class="movie" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp4AHOvAoJND69NmMCQHn4S7QDHjrDB41Eww&usqp=CAU)"></div>
+					<div class="movie" style="background-image:url(https://m.media-amazon.com/images/M/MV5BZTVkMjBlNTEtM2Y0YS00MTEyLWFhNzgtYjU1ZjM3YmY0ODg4XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg)"></div>
+					<div class="movie" style="background-image:url(https://m.media-amazon.com/images/I/61ljrN7zmoL._AC_SY679_.jpg)"></div>
+					<div class="movie" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSskuiX3I6wtUMAFOZ4BTlSUa6-y2-RtAT1Vw&usqp=CAU)"></div>
+	
+	</div>
+	</section>
+			
+				
+			<pre>
+
+
+
+			</pre>
+				
+				
+			</div>
+			</section>
+
+
+
+
+				<div class="slick-container">	<section id="section2">
+
+
+
+
+
+
+					<div class="slick">
+					<div class="movie" style="background-image:url(https://www.ecartelera.com/carteles/12800/12865/001_p.jpg)"></div>
+					<div class="movie" style="background-image:url(https://pics.filmaffinity.com/ARQ-692316640-mmed.jpg)"></div>
+					<div class="movie" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp4AHOvAoJND69NmMCQHn4S7QDHjrDB41Eww&usqp=CAU)"></div>
+					<div class="movie" style="background-image:url(https://m.media-amazon.com/images/M/MV5BZTVkMjBlNTEtM2Y0YS00MTEyLWFhNzgtYjU1ZjM3YmY0ODg4XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg)"></div>
+					<div class="movie" style="background-image:url(https://m.media-amazon.com/images/I/61ljrN7zmoL._AC_SY679_.jpg)"></div>
+					<div class="movie" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSskuiX3I6wtUMAFOZ4BTlSUa6-y2-RtAT1Vw&usqp=CAU)"></div>
+
+	
+
+	</section>
+<pre>
+
+
+			
+
+
+			</pre>
+
+
+
+
+<div class="slick-container"><section id="section3">
+					<div class="category-content"><ul>
+					<li class="active">
+		
+  <a href="javascript:void(0)" class="clickable-text" onclick="scrollToSection('section2')"> Englilsh </a></ul></div>
+					</li>
+					<div class="slick">
+					<div class="movie" style="background-image:url(https://www.ecartelera.com/carteles/12800/12865/001_p.jpg)"></div>
+					<div class="movie" style="background-image:url(https://pics.filmaffinity.com/ARQ-692316640-mmed.jpg)"></div>
+					<div class="movie" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp4AHOvAoJND69NmMCQHn4S7QDHjrDB41Eww&usqp=CAU)"></div>
+					<div class="movie" style="background-image:url(https://m.media-amazon.com/images/M/MV5BZTVkMjBlNTEtM2Y0YS00MTEyLWFhNzgtYjU1ZjM3YmY0ODg4XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg)"></div>
+					<div class="movie" style="background-image:url(https://m.media-amazon.com/images/I/61ljrN7zmoL._AC_SY679_.jpg)"></div>
+					<div class="movie" style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSskuiX3I6wtUMAFOZ4BTlSUa6-y2-RtAT1Vw&usqp=CAU)"></div>
+	
+	</div>
+	</section>
+
+
+
+
+
+
+<pre>
+
+
+
+
+			
+			</pre>
+
+
+
+
+			
+			</div>	
+			
+		
+			
+			<script>
+    function scrollToSection(sectionId) {
+      // Get the section element by id
+      const section = document.getElementById(sectionId);
+      // Scroll to the section
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+		</main>
+		
+		
+		<footer>
+			<nav>
+				<ul>
+					<li>
+						<a href="#">
+							<span>Home</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M13.8031 3.30948C12.0439 2.89684 10.2132 2.89684 8.45407 3.30948C5.9014 3.90825 3.90825 5.9014 3.30948 8.45407C2.89684 10.2132 2.89684 12.0439 3.30948 13.8031C3.90825 16.3557 5.9014 18.3489 8.45407 18.9477C10.2132 19.3603 12.0439 19.3603 13.8031 18.9477C14.8355 18.7055 15.7764 18.2352 16.5706 17.5921L19.767 20.7884C20.049 21.0705 20.5064 21.0705 20.7884 20.7884C21.0705 20.5064 21.0705 20.049 20.7884 19.767L17.5921 16.5706C18.2352 15.7764 18.7055 14.8355 18.9477 13.8031C19.3603 12.0439 19.3603 10.2132 18.9477 8.45407C18.3489 5.9014 16.3557 3.90825 13.8031 3.30948Z" fill="#696B6E" />
+							</svg>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" clip-rule="evenodd" d="M14.9703 20.6564C13.0166 21.1146 10.9834 21.1146 9.02977 20.6564C6.20842 19.9946 4.0055 17.7916 3.3437 14.9703C2.88543 13.0166 2.88543 10.9834 3.3437 9.02977C4.0055 6.20842 6.20842 4.0055 9.02977 3.3437C10.9834 2.88543 13.0166 2.88543 14.9703 3.3437C17.7916 4.00549 19.9946 6.20842 20.6564 9.02976C21.1146 10.9834 21.1146 13.0166 20.6564 14.9703C19.9946 17.7916 17.7916 19.9946 14.9703 20.6564ZM14.8175 13.3816C15.0518 13.1472 15.0518 12.7673 14.8175 12.533C14.5832 12.2987 14.2033 12.2987 13.969 12.533L12.6 13.902L12.6 8.64949C12.6 8.31812 12.3314 8.04949 12 8.04949C11.6686 8.04949 11.4 8.31812 11.4 8.64949V13.902L10.031 12.533C9.79673 12.2987 9.41683 12.2987 9.18252 12.533C8.9482 12.7673 8.9482 13.1472 9.18252 13.3816L11.5757 15.7748C11.6883 15.8873 11.8409 15.9505 12 15.9505C12.1591 15.9505 12.3117 15.8873 12.4243 15.7748L14.8175 13.3816Z" fill="#696B6E" />
+							</svg>
+
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M16.3117 3.4309C13.4642 2.85637 10.5358 2.85637 7.68829 3.4309C5.90482 3.79074 4.46955 5.15636 3.97717 6.96192L3.93526 7.11559C3.35491 9.24373 3.35491 11.4959 3.93526 13.6241L3.97717 13.7777C4.46955 15.5833 5.90482 16.9489 7.6883 17.3087C8.88637 17.5505 10.0988 17.6905 11.3134 17.7288V19.5826H9.71141C9.33222 19.5826 9.02483 19.8999 9.02483 20.2913C9.02483 20.6827 9.33222 21 9.71141 21H14.2886C14.6678 21 14.9752 20.6827 14.9752 20.2913C14.9752 19.8999 14.6678 19.5826 14.2886 19.5826H12.6866V17.7288C13.9012 17.6905 15.1136 17.5505 16.3117 17.3087C18.0952 16.9489 19.5305 15.5833 20.0228 13.7777L20.0647 13.6241C20.6451 11.4959 20.6451 9.24373 20.0647 7.11559L20.0228 6.96192C19.5305 5.15636 18.0952 3.79074 16.3117 3.4309Z" fill="#696B6E" />
+							</svg>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</footer>
+	</div>
+</div> 
+  <script src='https://unpkg.co/gsap@3/dist/gsap.min.js'></script>
+<script src='https://unpkg.com/gsap@3/dist/Draggable.min.js'></script>
+<script src='https://assets.codepen.io/16327/InertiaPlugin.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js'></script>
+      <script id="rendered-js" >
+
+var draggable = null;
+$(document).ready(function () {
+  /*if(window.innerWidth>=768){
+  	$('.viewport').tilt({maxTilt: 3})
+  }*/
+  productCarousel();
+  /*setEvent*/
+  $(".category-content li a").on("click", function (ev) {
+    ev.preventDefault();
+    changeCategory($(this));
+  });
+  $(".slick").slick({
+    infinite: false,
+    slidesToShow: 3,
+    variableWidth: true,
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    slide: ".movie" });
+
+  /*$(".trending-carousel .card").on("click", function (ev) {
+  	movieDetail($(this));
+  });*/
+});
+
+/*$(window).on("resize", function () {
+	productCarousel($);
+});*/
+function movieDetail(elem) {
+  gsap.
+  timeline().
+  to("h2,header", 0.2, { position: 'absolute' }).
+  to(".trending-carousel", 0, { width: "100%" }, "same").
+  to(".trending-carousel .card", 0, { autoAlpha: 0 }, "same").
+  to(
+  elem,
+  0.3,
+  {
+    y: 0,
+    x: 0,
+    rotationX: 0,
+    rotation: 0,
+    autoAlpha: 1,
+    width: "100%" },
+
+  "same");
+
+  draggable.disable();
+}
+function changeCategory(elem) {
+  $(".category-content li").removeClass("active");
+  elem.parent().addClass("active");
+}
+
+// productCarousel
+function productCarousel() {
+  gsap.defaults({
+    ease: "none" });
+
+  var viewport = document.querySelector("#app");
+  var track = document.querySelector(".trending-carousel");
+  var cells = document.querySelectorAll(".trending-carousel .card");
+  var proxy = document.createElement("div");
+
+  var cellWidth = viewport.offsetWidth * 0.5;
+
+  var rotation = -20;
+
+  var numCells = cells.length;
+  var cellStep = 1 / numCells;
+  var wrapWidth = cellWidth * numCells;
+  var wrapIndex = gsap.utils.wrap(0, cells.length);
+
+  var baseTl = gsap.timeline({ paused: true });
+
+  gsap.set(track, {
+    perspective: 800,
+    width: wrapWidth - cellWidth });
+
+
+  for (var i = 0; i < cells.length; i++) {if (window.CP.shouldStopExecution(0)) break;
+    initCell(cells[i], i);
+  }window.CP.exitedLoop(0);
+
+  var animation = gsap.
+  timeline({ repeat: -1, paused: true }).
+  add(baseTl.tweenFromTo(1, 2)).
+  progress(1);
+
+  draggable = new Draggable(proxy, {
+    allowContextMenu: true,
+    type: "x",
+    trigger: track,
+    inertia: true,
+    dragResistance: 0.6,
+    onDrag: updateProgress,
+    onThrowUpdate: updateProgress,
+    snap: {
+      x: snapX } });
+
+
+
+  function snapX(x) {
+    return Math.round(x / cellWidth) * cellWidth;
+  }
+
+  function updateProgress() {
+    let newProg = this.x / wrapWidth;
+    newProg = newProg - Math.floor(newProg);
+    animation.progress(newProg);
+  }
+
+  function initCell(element, index) {
+    gsap.set(element, {
+      width: cellWidth,
+      scale: 0.8,
+      rotation: rotation,
+      y: -15,
+      x: -cellWidth });
+
+
+    var tl = gsap.
+    timeline({ repeat: 1 }).
+    to(element, 1, { x: "+=" + wrapWidth, rotation: -rotation }, 0).
+    to(
+    element,
+    cellStep,
+    { scale: 1, rotationX: -40, y: -30, repeat: 1, yoyo: true },
+    0.5 - cellStep);
+
+
+    baseTl.add(tl, i * -cellStep);
+  }
+}
+//# sourceURL=pen.js
+    </script>
+
+  
+</body>
+
+</html>
